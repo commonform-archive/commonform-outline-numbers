@@ -5,21 +5,27 @@
 //         (I)
 
 var lowerAlpha = require('lower-alpha');
+
 var upperAlpha = function(i) {
   return lowerAlpha(i).toUpperCase();
 };
+
 var upperRoman = require('romanize');
+
 var lowerRoman = function(i) {
   return upperRoman(i).toLowerCase();
 };
+
 var arabic = function(i) {
   return i.toString();
 };
 
 var compound = function(primary, secondary) {
   return function(element, series) {
-    return (series ? secondary(series) + '-' : '') +
-      primary(element);
+    return (
+      (series ? secondary(series) + '-' : '') +
+      primary(element)
+    );
   };
 };
 
@@ -57,15 +63,19 @@ var renderComponent = function(component, level) {
 
 exports.provision = function(numbering) {
   var length = numbering.length;
-  return renderComponent(numbering[length - 1], length) +
-    (numbering.length === 1 ? '.' : '');
+  return (
+    renderComponent(numbering[length - 1], length) +
+    (numbering.length === 1 ? '.' : '')
+  );
 };
 
 exports.reference = function(numbering) {
-  return 'Section ' +
+  return (
+    'Section ' +
     numbering.reduce(function(number, component, i) {
       return number + renderComponent(component, i + 1);
-    }, '');
+    }, '')
+  );
 };
 
 exports.version = '0.1.0';
